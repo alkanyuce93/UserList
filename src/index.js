@@ -3,14 +3,13 @@ $(document).ready(function () {
   var appId = "60e344ca4876ae6a77d19d74";
   var initLimit = 15;
   var $card = $("#card-content");
-  var $loading = $('#loadingDiv').hide();
+  var $loading = $("#loadingDiv").hide();
 
   $("#moreButton").hide();
- 
+
   getUserList(initLimit); // set initial users
   function getUserList(limit) {
-
-    console.log("limit", limit)
+    console.log("limit", limit);
     $.ajax({
       url: `${apiUrl}/user?limit=${limit}`,
       type: "GET",
@@ -28,7 +27,6 @@ $(document).ready(function () {
         $("#loading").hide();
 
         $.each(result.data, function (i, profile) {
-
           renderProfiles(profile, i);
         });
       },
@@ -36,7 +34,7 @@ $(document).ready(function () {
         console.log("error", error);
       },
     });
-  };
+  }
 
   function renderProfiles(profile, i) {
     $card.append(
@@ -61,28 +59,26 @@ $(document).ready(function () {
           </div>`
     );
   }
- 
 
   $("#moreButton").click(function () {
     initLimit += 15;
-    console.log("moreButton", initLimit)
+    console.log("moreButton", initLimit);
     $("#card-content").empty();
     $("#moreButton").hide();
     $("#loading").show();
 
-    getUserList(initLimit)
+    getUserList(initLimit);
   });
 
   $("#searchInput").keyup(function () {
-
     // Retrieve the input field text and reset the count to zero
     var searchText = $(this).val();
 
-    $("#card-content div").each(function(){
-     var $this = $(this);
-     if($this.text().toLowerCase().indexOf(searchText) === -1)
-         $this.closest("#card-content div").fadeOut();
-    else $this.closest("#card-content div").fadeIn();
-});
+    $("#card-content div").each(function () {
+      var $this = $(this);
+      if ($this.text().toLowerCase().indexOf(searchText) === -1)
+        $this.closest("#card-content div").fadeOut();
+      else $this.closest("#card-content div").fadeIn();
+    });
   });
 });
